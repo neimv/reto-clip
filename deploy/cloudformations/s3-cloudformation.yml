@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Base infra to use with AeroCTL
+
+Parameters:
+  # S3
+  BucketName:
+    Description: Name of bucket to use
+    Type: String
+    Default: aerodrome-ctl
+
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Description: Creating Amazon S3 bucket from CloudFormation
+    Properties:
+      BucketName: !Ref BucketName
+      VersioningConfiguration:
+        Status: Enabled
+      BucketEncryption: 
+        ServerSideEncryptionConfiguration: 
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+
+Outputs:
+  S3Bucket:
+    Description: Bucket Created using this template.
+    Value: !Ref S3Bucket
+    Export:
+      Name: AerodromeS3Bucket
