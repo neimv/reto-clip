@@ -95,6 +95,8 @@ Resources:
       BackupRetentionPeriod: 1
       EnableIAMDatabaseAuthentication: false
       PubliclyAccessible: false
+      VPCSecurityGroups:
+        - !ImportValue SecurityGroupIdDB
 
 Outputs:
   DatabaseName:

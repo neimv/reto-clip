@@ -4,12 +4,23 @@ Resources:
   SecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Allow Access to Web Port and pg from anywhere
+      GroupDescription: Allow Access to SSH
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
           CidrIp: "0.0.0.0/0"
+      VpcId: !ImportValue VPC
+
+  SecurityGroupDB:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow Access to MySQL
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          SourceSecurityGroupId: !GetAtt SecurityGroup.GroupId
       VpcId: !ImportValue VPC
 
 Outputs:
@@ -18,3 +29,8 @@ Outputs:
     Value: !Ref SecurityGroup
     Export:
       Name: SecurityGroupId
+  SecurityGroupDB:
+    Description: id of security group
+    Value: !Ref SecurityGroupDB
+    Export:
+      Name: SecurityGroupIdDB

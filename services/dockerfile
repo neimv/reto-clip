@@ -17,6 +17,5 @@ FROM alpine:latest
 
 RUN apk add ca-certificates
 COPY --from=build_base /tmp/go-pet-app/out/go-pet-app /app/go-pet-app
-EXPOSE 8081
 
 CMD [ "/app/go-pet-app" ]
