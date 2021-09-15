@@ -104,6 +104,7 @@ def create_keyPem(create=True):
         with open('./reto.pem', 'w') as file:
             file.write(new_keypair.key_material)
     else:
+        ec2 = boto3.client('ec2')
         ec2.delete_key_pair(KeyName=key_name)
         os.remove('./reto.pem')
 
@@ -122,7 +123,7 @@ def deploy():
 
 
 @cli.command()
-def deconstruct():
+def destroy():
     deletes = cloudformation_files[::-1]
     create_keyPem(False)
 
