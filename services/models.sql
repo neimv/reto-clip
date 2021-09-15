@@ -8,8 +8,3 @@ CREATE TABLE IF NOT EXISTS pet (
     species VARCHAR(20) NULL,
     sex     CHAR(1) NULL
 );
-
-INSERT INTO pet
-    VALUES ('prueba', 'prueba', 'test', 'H');
-INSERT INTO pet
-    VALUES ('prueba2', 'prueba2', 'test2', 'M');

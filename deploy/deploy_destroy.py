@@ -18,10 +18,12 @@ coloredlogs.install(level='INFO')
 pp = pprint.PrettyPrinter(indent=4)
 
 
-path_cf = 'files_infra/cloudformations/'
+path_cf = 'cloudformations/'
 cloudformation_files = [
-    ['network', f'{path_cf}01-network-cloudformation.yml'],
-    ['rds', f'{path_cf}02-rds-cloudformation.yml'],
+    ['reto-network', f'{path_cf}01-network-cloudformation.yml'],
+    ['reto-security-group', f'{path_cf}02-securitygroup-cloudformation.yml'],
+    ['reto-rds', f'{path_cf}03-rds-cloudformation.yml'],
+    ['reto-ec2', f'{path_cf}04-ec2-cloudformation.yml'],
 ]
 
 
@@ -112,16 +114,17 @@ def cli():
 
 
 @cli.command()
-@click.option()
 def deploy():
+    create_keyPem()
+
     for values in cloudformation_files:
         create_destroy(values[0], values[1], True)
-
 
 
 @cli.command()
 def deconstruct():
     deletes = cloudformation_files[::-1]
+    create_keyPem(False)
 
     for values in deletes:
         create_destroy(values[0], values[1], False)

@@ -107,6 +107,11 @@ Outputs:
     Value: !GetAtt DB.Endpoint.Port
     Export:
       Name: DatabasePort
+  DatabaseUrl:
+    Description: URL of database
+    Value: !GetAtt DB.Endpoint.Address
+    Export:
+      Name: DatabaseUrl
   DatabaseSecrets:
     Description: Arn of secretsmanager
     Value: !Ref RDSSecret
