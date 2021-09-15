@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  RepositoryName:
+    Description: Name of repository to use with ecr
+    Type: String
+    Default: reto
+
+Resources:
+  Repository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: !Ref RepositoryName
+
+Outputs:
+  Repository:
+    Description: URL of repository
+    Value: !GetAtt Repository.RepositoryUri
+    Export:
+      Name: Repository

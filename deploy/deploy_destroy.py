@@ -94,21 +94,6 @@ def create_destroy(name, path_cf, create=True):
             return True
 
 
-def create_keyPem(create=True):
-    ec2 = boto3.resource('ec2')
-    key_name = 'reto'
-
-    if create is True:
-        new_keypair = ec2.create_key_pair(KeyName=key_name)
-
-        with open('./reto.pem', 'w') as file:
-            file.write(new_keypair.key_material)
-    else:
-        ec2 = boto3.client('ec2')
-        ec2.delete_key_pair(KeyName=key_name)
-        os.remove('./reto.pem')
-
-
 @click.group()
 def cli():
     pass
@@ -116,8 +101,6 @@ def cli():
 
 @cli.command()
 def deploy():
-    create_keyPem()
-
     for values in cloudformation_files:
         create_destroy(values[0], values[1], True)
 
@@ -125,7 +108,6 @@ def deploy():
 @cli.command()
 def destroy():
     deletes = cloudformation_files[::-1]
-    create_keyPem(False)
 
     for values in deletes:
         create_destroy(values[0], values[1], False)
