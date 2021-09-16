@@ -23,6 +23,9 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
+	e.GET("/healthcheck", func(c echo.Context) error {
+		return c.String(http.StatusOK, "pass")
+	})
 	e.GET("/api/pet/:name", GetPet)
 
 	e.Logger.Fatal(e.Start(":" + port))

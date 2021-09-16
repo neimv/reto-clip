@@ -60,8 +60,8 @@ Resources:
       DBSubnetGroupDescription: "DBSubnetGroup for RDS postgresql instance"
       DBSubnetGroupName: DBSubnetGroup
       SubnetIds:
-        - !ImportValue PrivateSubnet1
-        - !ImportValue PrivateSubnet2
+        - !ImportValue PublicSubnet1
+        - !ImportValue PublicSubnet2
 
   RDSSecret:
     Type: AWS::SecretsManager::Secret
@@ -94,7 +94,7 @@ Resources:
       DeletionProtection: false
       BackupRetentionPeriod: 1
       EnableIAMDatabaseAuthentication: false
-      PubliclyAccessible: false
+      PubliclyAccessible: true
       VPCSecurityGroups:
         - !ImportValue SecurityGroupIdDB
 

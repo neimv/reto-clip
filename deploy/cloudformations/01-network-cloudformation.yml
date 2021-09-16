@@ -25,6 +25,11 @@ Parameters:
     Type: String
     Default: 10.0.3.0/24
     AllowedPattern: ([0-9]{1,3}\.){3}[0-9]{1,3}($|/(24))
+  PublicSubnet2CIDR:
+    Description: Please enter the IP range (CIDR notation) for the public subnet in the first Availability Zone
+    Type: String
+    Default: 10.0.4.0/24
+    AllowedPattern: ([0-9]{1,3}\.){3}[0-9]{1,3}($|/(24))
 
 Resources:
   VPC:
@@ -96,6 +101,23 @@ Resources:
     Properties:
       RouteTableId: !Ref PublicRouteTable
       SubnetId: !Ref PublicSubnet1
+
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: !Ref PublicSubnet2CIDR
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName} Public Subnet (AZ2)
+
+  PublicSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet2
 
 
   PrivateSubnet1:
@@ -190,3 +212,13 @@ Outputs:
     Value: !Ref PublicSubnet1
     Export:
       Name: PublicSubnet1
+  PublicSubnet2:
+    Description: A reference to the public subnet to connect to ssh
+    Value: !Ref PublicSubnet2
+    Export:
+      Name: PublicSubnet2
+  InternetGatewayAttachment:
+    Description: Internet gateway attacjh
+    Value: !Ref InternetGatewayAttachment
+    Export:
+      Name: InternetGatewayAttachment

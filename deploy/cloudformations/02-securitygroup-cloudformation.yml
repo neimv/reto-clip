@@ -10,6 +10,14 @@ Resources:
           FromPort: 22
           ToPort: 22
           CidrIp: "0.0.0.0/0"
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: "0.0.0.0/0"
+        - IpProtocol: tcp
+          FromPort: 433
+          ToPort: 433
+          CidrIp: "0.0.0.0/0"
       VpcId: !ImportValue VPC
 
   SecurityGroupDB:
@@ -21,6 +29,10 @@ Resources:
           FromPort: 3306
           ToPort: 3306
           SourceSecurityGroupId: !GetAtt SecurityGroup.GroupId
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: "201.141.16.225/32"
       VpcId: !ImportValue VPC
 
 Outputs:

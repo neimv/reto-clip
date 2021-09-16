@@ -5,14 +5,14 @@ RDS_CF=reto-rds
 PORT=80
 
 Help() {
-   echo "Script to deploy app or only update server"
-   echo
-   echo "Syntax: scriptTemplate [-d|u|h]"
-   echo "options:"
-   echo "d     Deploy app"
-   echo "u     Update server"
-   echo "h     Print this Help"
-   echo
+    echo "Script to deploy app or only update server"
+    echo
+    echo "Syntax: scriptTemplate [-d|u|h]"
+    echo "options:"
+    echo "d     Deploy app"
+    echo "u     Update server"
+    echo "h     Print this Help"
+    echo
 }
 
 echo "Get the dns to connect"
